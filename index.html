@@ -261,108 +261,84 @@
             © 2025 Meridian Behavioral Pathways LLC
         </div>
     </footer>
-     <script>
-        // Use a variable for your script URL
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyByqty_JmY929ttFIG5pf-TMH0_hmqCICDYPRlqJ1m6-pVB75kU-Nd3lU_ynseIX3uOQ/exec';
+
+<script>
+        // Replace with your actual Google Apps Script Web App URL
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyByqty_JmY929ttFIG5pf-TMH0_hmqCICDYPRlqJ1m6-pVB75kU-Nd3lU_ynseIX3uOQ/execL';
 
         /**
-         * toggleModal handles opening and closing of modals
-         * Matches your button's onclick signature: toggleModal('contactModal', true)
+         * toggleModal
+         * Handles the visibility of the modal and resets UI state
          */
         function toggleModal(modalId, show) {
             const modal = document.getElementById(modalId);
             if (!modal) return;
 
             if (show) {
-                modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-                // Optional: Reset form on open
-                const form = modal.querySelector('form');
-                if (form) {
-                    form.reset();
-                    document.getElementById('formStatus').classList.add('hidden');
-                    const btn = document.getElementById('submitBtn');
-                    btn.disabled = false;
-                    btn.innerHTML = 'Submit Intake';
-                }
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                // Ensure form is visible and success is hidden on fresh open
+                document.getElementById('contact-form-container').classList.remove('hidden');
+                document.getElementById('contact-success').classList.add('hidden');
+                document.getElementById('contactForm').reset();
             } else {
-                modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
             }
         }
 
-        // Form Handling
-        const intakeForm = document.getElementById('intakeForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const formStatus = document.getElementById('formStatus');
-
-        intakeForm.onsubmit = async (e) => {
-            e.preventDefault();
-
-            // 1. Initial UI State
+        /**
+         * handleFormSubmit
+         * Processes data and sends it to the cloud
+         */
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            
+            // UI Loading State
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner"></span> Processing...';
-            updateStatus("Sending your information...", "loading");
+            btnText.textContent = "Sending...";
+            submitBtn.style.opacity = "0.7";
 
-            // 2. Prepare Data
-            const formData = new FormData(intakeForm);
+            const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
             try {
-                // 3. API Call with Timeout
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 12000);
-
-                const response = await fetch(APPS_SCRIPT_URL, {
+                // Using no-cors mode for Google Apps Script
+                await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Critical for Google Apps Script
-                    body: JSON.stringify(data),
-                    signal: controller.signal
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
                 });
 
-                clearTimeout(timeoutId);
+                // Since no-cors doesn't return a standard response, we assume success if no error is thrown
+                document.getElementById('contact-form-container').classList.add('hidden');
+                document.getElementById('contact-success').classList.remove('hidden');
 
-                // 4. Success State
-                updateStatus("Intake submitted successfully! We'll contact you soon.", "success");
-                submitBtn.innerHTML = 'Sent!';
-                
-                // Close modal after a delay
-                setTimeout(() => toggleModal('contactModal', false), 2500);
-
-            } catch (err) {
-                // 5. Error State
-                console.error("Submission Error:", err);
+            } catch (error) {
+                console.error('Submission error:', error);
+                btnText.textContent = "Error - Try Again";
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Submit Intake';
-
-                if (err.name === 'AbortError') {
-                    updateStatus("The request timed out. Please check your connection.", "error");
-                } else {
-                    updateStatus("There was a problem sending your form. Please try again.", "error");
-                }
-            }
-        };
-
-        function updateStatus(message, type) {
-            formStatus.classList.remove('hidden', 'bg-red-50', 'text-red-800', 'border-red-200', 'bg-green-50', 'text-green-800', 'border-green-200', 'bg-blue-50', 'text-blue-800', 'border-blue-200');
-            formStatus.textContent = message;
-
-            if (type === 'error') {
-                formStatus.classList.add('bg-red-50', 'text-red-800', 'border-red-200');
-            } else if (type === 'success') {
-                formStatus.classList.add('bg-green-50', 'text-green-800', 'border-green-200');
-            } else {
-                formStatus.classList.add('bg-blue-50', 'text-blue-800', 'border-blue-200');
+                submitBtn.style.opacity = "1";
             }
         }
 
-        // Close on overlay click
-        document.getElementById('contactModal').addEventListener('click', (e) => {
-            if (e.target.id === 'contactModal') toggleModal('contactModal', false);
-        });
+        // Close modal if user clicks outside the white box
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target == modal) {
+                toggleModal('contactModal', false);
+            }
+        }
     </script>
 </body>
 </html>
+
 
 
 
