@@ -345,6 +345,15 @@
                 submitBtn.style.opacity = "1";
             }
         }
+        // Back to Top functionality
+        const btt = document.getElementById('backToTop');
+        window.onscroll = function() {
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                btt.classList.add('visible');
+            } else {
+                btt.classList.remove('visible');
+            }
+        };
 
         window.onclick = function(event) {
             const modal = document.getElementById('contactModal');
@@ -355,6 +364,7 @@
     </script>
 </body>
 </html>
+
 
 
 
