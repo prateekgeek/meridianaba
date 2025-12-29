@@ -56,7 +56,7 @@
             <a href="#about" class="nav-link" onclick="document.getElementById('mobile-menu').classList.add('hidden')">About Us</a>
             <a href="#services" class="nav-link" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Services</a>
             <a href="#clinical" class="nav-link" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Clinical Model</a>
-            <button onclick="toggleModal('contactModal', true); document.getElementById('mobile-menu').classList.add('hidden')" class="bg-teal-700 text-white px-6 py-2.5 rounded-full font-semibold w-full">Start Intake</button>
+            <button onclick="toggleModal('contactModal', true); document.getElementById('mobile-menu')?.classList.add('hidden')" class="bg-teal-700 text-white px-6 py-2.5 rounded-full font-semibold">Start Intake</button>
         </div>
     </nav>
 
@@ -207,28 +207,38 @@
         </svg>
     </a>
 
-    <!-- Contact Modal -->
+        <!-- Contact Modal (Your exact structure) -->
     <div id="contactModal" class="modal overflow-y-auto">
         <div class="max-w-xl mx-auto my-10 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative">
             <button onclick="toggleModal('contactModal', false)" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors">✕</button>
+            
             <div id="contact-form-container">
                 <h2 class="text-2xl font-bold text-slate-900 mb-2">Request Consultation</h2>
                 <p class="text-sm text-slate-500 mb-8">Tell us about your child's needs. All information is confidential.</p>
+                
                 <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
                     <input type="text" name="name" required placeholder="Parent/Guardian Name" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all">
+                    
                     <div class="grid grid-cols-2 gap-4">
                         <input type="tel" name="phone" required placeholder="Phone" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all">
                         <input type="email" name="email" required placeholder="Email" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all">
                     </div>
+                    
                     <select name="service" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all appearance-none">
                         <option>Direct Home-Based ABA</option>
                         <option>Parent Training Only</option>
                         <option>Insurance Verification</option>
                     </select>
+                    
                     <textarea name="notes" rows="3" placeholder="Tell us about your child's age and current needs..." class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all"></textarea>
-                    <button id="submitBtn" type="submit" class="w-full bg-teal-700 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-teal-800 transition-all">Submit Inquiry</button>
+                    
+                    <button id="submitBtn" type="submit" class="w-full bg-teal-700 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-teal-800 transition-all flex justify-center items-center">
+                        <span id="btnText">Submit Inquiry</span>
+                    </button>
                 </form>
             </div>
+
+            <!-- Success Section -->
             <div id="contact-success" class="hidden text-center py-10">
                 <div class="w-16 h-16 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">✓</div>
                 <h3 class="text-xl font-bold text-slate-900 mb-2">Request Received</h3>
@@ -338,6 +348,7 @@
     </script>
 </body>
 </html>
+
 
 
 
