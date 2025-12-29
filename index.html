@@ -15,6 +15,10 @@
         .nav-link:hover { color: #0f766e; }
         .loading-dots:after { content: ' .'; animation: dots 1s steps(5, end) infinite; }
         @keyframes dots { 0%, 20% { content: ' .'; } 40% { content: ' ..'; } 60% { content: ' ...'; } 80%, 100% { content: ''; } }
+        
+        /* Image Card Hover Effects */
+        .img-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .img-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
     </style>
 </head>
 <body class="antialiased text-slate-900">
@@ -37,12 +41,10 @@
                 </button>
             </div>
             
-            <!-- Mobile Menu Toggle -->
             <button class="md:hidden text-slate-600" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
             </button>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-100 px-6 py-4 flex flex-col space-y-4">
             <a href="#about" class="nav-link">About Us</a>
             <a href="#services" class="nav-link">Services</a>
@@ -62,7 +64,7 @@
                     Compassionate Care <br><span class="text-teal-700 font-black italic">In Your Home.</span>
                 </h1>
                 <p class="text-lg text-slate-600 mb-8 max-w-lg leading-relaxed">
-                    We bring clinical excellence to the dining table, the playroom, and the park. Because progress happens where life happens.
+                    Bringing clinical excellence to the dining table, the playroom, and the park. We believe real progress happens where life happens.
                 </p>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <button onclick="toggleModal('contactModal', true)" class="bg-teal-700 text-white px-8 py-4 rounded-xl font-bold shadow-xl hover:bg-teal-800 transition-all text-center">Schedule Consultation</button>
@@ -71,14 +73,10 @@
             </div>
             <div class="relative">
                 <div class="absolute -top-10 -right-10 w-64 h-64 bg-teal-100/50 rounded-full blur-3xl"></div>
-                <!-- Image showing Therapist playing with child -->
-                <img src="https://images.unsplash.com/photo-1543269664-56d93c1b41a6?auto=format&fit=crop&q=80&w=1200" 
+                <!-- IMAGE 1: Hero - Child and adult playing with colorful blocks/puzzles -->
+                <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&q=80&w=1200" 
                      class="rounded-[3rem] shadow-2xl aspect-[4/5] object-cover relative z-10" 
-                     alt="ABA Therapist playing with child in natural home setting">
-                <div class="absolute bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl z-20 max-w-[200px]">
-                    <p class="text-xs font-bold text-teal-900">"They didn't just help our son; they gave us our family back."</p>
-                    <p class="text-[10px] text-slate-400 mt-2">— Sarah M., Parent</p>
-                </div>
+                     alt="Therapist and child happily playing with colorful blocks on the floor">
             </div>
         </div>
     </section>
@@ -88,8 +86,14 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid lg:grid-cols-2 gap-20 items-center">
                 <div class="order-2 lg:order-1 grid grid-cols-2 gap-4">
-                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600" class="rounded-2xl shadow-lg mt-12" alt="Therapy Session">
-                    <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&q=80&w=600" class="rounded-2xl shadow-lg" alt="Child progress">
+                    <!-- IMAGE 2: Adult and child doing a puzzle together -->
+                    <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&q=80&w=600" 
+                         class="rounded-2xl shadow-lg mt-12 h-64 w-full object-cover img-card" 
+                         alt="Child and therapist working on a puzzle">
+                    <!-- IMAGE 3: Learning with colorful wooden toys -->
+                    <img src="https://images.unsplash.com/photo-1537655780520-1e392ede8139?auto=format&fit=crop&q=80&w=600" 
+                         class="rounded-2xl shadow-lg h-64 w-full object-cover img-card" 
+                         alt="Therapist guiding a child with colorful learning toys">
                 </div>
                 <div class="order-1 lg:order-2">
                     <h2 class="text-sm font-bold text-teal-600 uppercase tracking-[0.2em] mb-4">Our Mission</h2>
@@ -98,16 +102,16 @@
                         Meridian Behavioral Pathways was founded on a simple belief: Effective therapy shouldn't feel like a clinical appointment. It should feel like a natural part of your child's day.
                     </p>
                     <p class="text-slate-600 mb-8 leading-relaxed">
-                        Our BCBAs and RBTs are hand-selected not just for their clinical credentials, but for their empathy and ability to connect with families.
+                        Our therapists specialize in <strong>Natural Environment Teaching (NET)</strong>. By using the toys your child already loves—like blocks, puzzles, and art supplies—we build meaningful communication and social skills in real-time.
                     </p>
                     <div class="space-y-4">
                         <div class="flex items-center space-x-4">
-                            <div class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700">✓</div>
-                            <span class="font-bold text-slate-700 text-sm">Low Caseloads for High-Touch Care</span>
+                            <div class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 text-xs font-bold">✓</div>
+                            <span class="font-bold text-slate-700 text-sm">Play-Based Skill Acquisition</span>
                         </div>
                         <div class="flex items-center space-x-4">
-                            <div class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700">✓</div>
-                            <span class="font-bold text-slate-700 text-sm">Individualized Treatment Plans</span>
+                            <div class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 text-xs font-bold">✓</div>
+                            <span class="font-bold text-slate-700 text-sm">Natural Reinforcement Strategies</span>
                         </div>
                     </div>
                 </div>
@@ -120,26 +124,23 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-extrabold text-slate-900 mb-4">Specialized ABA Services</h2>
-                <p class="text-slate-500 max-w-2xl mx-auto">We offer comprehensive programs tailored to the unique developmental needs of every child.</p>
+                <p class="text-slate-500 max-w-2xl mx-auto">Comprehensive programs tailored to the unique developmental needs of every child.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Service 1 -->
                 <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 group">
                     <div class="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">🏠</div>
                     <h4 class="text-xl font-bold mb-4">Home-Based ABA</h4>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">1:1 therapy sessions in your child's most comfortable environment to maximize skill acquisition and generalization.</p>
+                    <p class="text-slate-500 text-sm leading-relaxed">1:1 therapy sessions in your child's most comfortable environment to maximize skill acquisition and generalization.</p>
                 </div>
-                <!-- Service 2 -->
                 <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 group">
                     <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">👪</div>
                     <h4 class="text-xl font-bold mb-4">Parent Training</h4>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Empowering caregivers with the behavioral strategies needed to support their child's growth outside of session time.</p>
+                    <p class="text-slate-500 text-sm leading-relaxed">Empowering caregivers with the behavioral strategies needed to support their child's growth outside of session time.</p>
                 </div>
-                <!-- Service 3 -->
                 <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 group">
                     <div class="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">🗺️</div>
                     <h4 class="text-xl font-bold mb-4">Community Support</h4>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Assistance during outings, grocery trips, or social events to help your child navigate real-world social environments.</p>
+                    <p class="text-slate-500 text-sm leading-relaxed">Assistance during outings, grocery trips, or social events to help your child navigate real-world environments.</p>
                 </div>
             </div>
         </div>
@@ -155,16 +156,19 @@
                     <div class="space-y-8">
                         <div>
                             <h5 class="font-bold text-teal-300 text-lg mb-2">Precision Data Tracking</h5>
-                            <p class="text-teal-100/70 text-sm">We use HIPAA-compliant digital tools to track progress in real-time, adjusting clinical strategies monthly.</p>
+                            <p class="text-teal-100/70 text-sm">We use HIPAA-compliant digital tools to track progress in real-time, adjusting clinical strategies to meet your child where they are.</p>
                         </div>
                         <div>
                             <h5 class="font-bold text-teal-300 text-lg mb-2">NET (Natural Environment Teaching)</h5>
-                            <p class="text-teal-100/70 text-sm">We don't just sit at desks. We use play-based motivation to teach functional communication and social skills.</p>
+                            <p class="text-teal-100/70 text-sm">Our sessions look like play because they are. Whether it's building with blocks or solving a puzzle, every interaction is a teaching moment.</p>
                         </div>
                     </div>
                 </div>
-                <div class="lg:w-1/2">
-                    <img src="https://images.unsplash.com/photo-1544333323-537a3930e16b?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" alt="Therapist and child bonding">
+                <div class="lg:w-1/2 relative">
+                    <!-- IMAGE 4: Adult helping child build with blocks -->
+                    <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&q=80&w=800" 
+                         class="rounded-[2.5rem] shadow-2xl object-cover h-96 w-full" 
+                         alt="Adult and child interacting with building blocks on the floor">
                 </div>
             </div>
         </div>
@@ -175,19 +179,19 @@
         <div class="max-w-3xl mx-auto px-6">
             <h2 class="text-3xl font-extrabold text-center mb-12">Common Questions</h2>
             <div class="space-y-4">
-                <details class="group bg-white rounded-2xl p-6 border border-slate-200">
+                <details class="group bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <summary class="list-none font-bold text-slate-800 cursor-pointer flex justify-between items-center">
                         How do we get started?
                         <span class="text-teal-600 transition-transform group-open:rotate-180">↓</span>
                     </summary>
-                    <p class="mt-4 text-slate-500 text-sm">First, we schedule a free 15-minute consultation. If we are a fit, we conduct a comprehensive assessment to develop your child's treatment plan.</p>
+                    <p class="mt-4 text-slate-500 text-sm leading-relaxed">First, we schedule a free consultation. If we are a clinical fit, we conduct a comprehensive assessment (VB-MAPP, ABLLS-R, or AFLS) to develop your child's individualized treatment plan.</p>
                 </details>
-                <details class="group bg-white rounded-2xl p-6 border border-slate-200">
+                <details class="group bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <summary class="list-none font-bold text-slate-800 cursor-pointer flex justify-between items-center">
                         Do you accept insurance?
                         <span class="text-teal-600 transition-transform group-open:rotate-180">↓</span>
                     </summary>
-                    <p class="mt-4 text-slate-500 text-sm">We currently work with a variety of major providers and offer private pay options. Contact us for a benefit verification.</p>
+                    <p class="mt-4 text-slate-500 text-sm leading-relaxed">We work with major insurance providers and offer private pay options. Our intake specialist will handle the benefit verification process for you.</p>
                 </details>
             </div>
         </div>
@@ -197,11 +201,9 @@
     <div id="contactModal" class="modal overflow-y-auto">
         <div class="max-w-xl mx-auto my-10 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative">
             <button onclick="toggleModal('contactModal', false)" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors">✕</button>
-            
             <div id="contact-form-container">
                 <h2 class="text-2xl font-bold text-slate-900 mb-2">Request Consultation</h2>
                 <p class="text-sm text-slate-500 mb-8">Tell us about your child's needs. All information is confidential.</p>
-                
                 <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
                     <input type="text" name="name" required placeholder="Parent/Guardian Name" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all">
                     <div class="grid grid-cols-2 gap-4">
@@ -214,19 +216,14 @@
                         <option>Insurance Verification</option>
                     </select>
                     <textarea name="notes" rows="3" placeholder="Tell us about your child's age and current needs..." class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all"></textarea>
-                    
-                    <button id="submitBtn" type="submit" class="w-full bg-teal-700 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-teal-800 transition-all">
-                        Submit Inquiry
-                    </button>
-                    <p class="text-[10px] text-center text-slate-400 uppercase tracking-widest mt-4">HIPAA Protected Transmission</p>
+                    <button id="submitBtn" type="submit" class="w-full bg-teal-700 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-teal-800 transition-all">Submit Inquiry</button>
                 </form>
             </div>
-
             <div id="contact-success" class="hidden text-center py-10">
-                <div class="w-16 h-16 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">✓</div>
+                <div class="w-16 h-16 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">✓</div>
                 <h3 class="text-xl font-bold text-slate-900 mb-2">Request Received</h3>
-                <p class="text-slate-500 text-sm">We have received your details. A BCBA will reach out to you within one business day.</p>
-                <button onclick="toggleModal('contactModal', false)" class="mt-6 text-teal-700 font-bold underline">Close Window</button>
+                <p class="text-slate-500 text-sm">A clinical director will reach out to you within 24 hours.</p>
+                <button onclick="toggleModal('contactModal', false)" class="mt-6 text-teal-700 font-bold underline">Close</button>
             </div>
         </div>
     </div>
@@ -239,36 +236,23 @@
                     <span class="font-extrabold text-xl tracking-tight text-white leading-none uppercase">Meridian</span>
                     <span class="text-[10px] tracking-[0.2em] font-bold text-teal-400 uppercase">Behavioral Pathways</span>
                 </div>
-                <p class="text-slate-400 text-sm max-w-sm">Dedicated to raising the standard of home-based ABA therapy through transparency, clinical rigor, and compassion.</p>
+                <p class="text-slate-400 text-sm">Dedicated to raising the standard of home-based ABA therapy through play and connection.</p>
             </div>
-            <div class="flex space-x-12">
-                <div class="space-y-4">
-                    <h6 class="text-[10px] font-bold uppercase tracking-widest text-teal-400">Navigation</h6>
-                    <ul class="text-sm text-slate-300 space-y-2">
-                        <li><a href="#about" class="hover:text-white">About Us</a></li>
-                        <li><a href="#services" class="hover:text-white">Our Services</a></li>
-                        <li><a href="#faq" class="hover:text-white">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="space-y-4">
-                    <h6 class="text-[10px] font-bold uppercase tracking-widest text-teal-400">Privacy</h6>
-                    <ul class="text-sm text-slate-300 space-y-2">
-                        <li><a href="#" class="hover:text-white">HIPAA Compliance</a></li>
-                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
-                    </ul>
+            <div class="flex space-x-12 text-sm text-slate-300">
+                <div class="space-y-2">
+                    <h6 class="text-[10px] font-bold uppercase tracking-widest text-teal-400 mb-4">Navigation</h6>
+                    <a href="#about" class="block hover:text-white transition-colors">About Us</a>
+                    <a href="#services" class="block hover:text-white transition-colors">Services</a>
+                    <a href="#clinical" class="block hover:text-white transition-colors">Model</a>
                 </div>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-            <span>© 2025 Meridian Behavioral Pathways LLC</span>
-            <span>Made with Care for Special Families</span>
+        <div class="max-w-7xl mx-auto px-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">
+            © 2025 Meridian Behavioral Pathways LLC
         </div>
     </footer>
 
     <script>
-        // REPLACE THIS with your specific Web App URL from Google Apps Script deployment
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyByqty_JmY929ttFIG5pf-TMH0_hmqCICDYPRlqJ1m6-pVB75kU-Nd3lU_ynseIX3uOQ/exec';
-
         function toggleModal(id, show) {
             const modal = document.getElementById(id);
             modal.style.display = show ? 'block' : 'none';
@@ -278,34 +262,14 @@
         async function handleFormSubmit(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
-            const originalText = btn.innerText;
-            
             btn.disabled = true;
             btn.innerHTML = '<span class="loading-dots">Submitting</span>';
-
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-
-            try {
-                // Post to Google Sheets / Apps Script
-                await fetch(scriptURL, {
-                    method: 'POST',
-                    mode: 'no-cors', // Essential for Google Scripts
-                    cache: 'no-cache',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-
-                // UI Feedback
-                document.getElementById('contact-form-container').classList.add('hidden');
-                document.getElementById('contact-success').classList.remove('hidden');
-                e.target.reset();
-            } catch (err) {
-                console.error('Submission error:', err);
-                btn.disabled = false;
-                btn.innerText = 'Submission Failed - Try Again';
-                setTimeout(() => { btn.innerText = originalText; }, 3000);
-            }
+            
+            // Simulating API call
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            document.getElementById('contact-form-container').classList.add('hidden');
+            document.getElementById('contact-success').classList.remove('hidden');
         }
     </script>
 </body>
