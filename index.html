@@ -261,81 +261,62 @@
             © 2025 Meridian Behavioral Pathways LLC
         </div>
     </footer>
-    <script>
-        // REPLACE THIS URL with your actual Google Apps Script Web App URL
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyByqty_JmY929ttFIG5pf-TMH0_hmqCICDYPRlqJ1m6-pVB75kU-Nd3lU_ynseIX3uOQ/exec";
+     <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyByqty_JmY929ttFIG5pf-TMH0_hmqCICDYPRlqJ1m6-pVB75kU-Nd3lU_ynseIX3uOQ/exec'; // PASTE YOUR DEPLOYED URL HERE
+        const form = document.getElementById('contactForm');
+        const btn = document.getElementById('submitBtn');
+        const statusBox = document.getElementById('statusBox');
 
-        function toggleModal(id, show) {
-            const modal = document.getElementById(id);
-            modal.style.display = show ? 'block' : 'none';
-            document.body.style.overflow = show ? 'hidden' : 'auto';
-        }
-
-        const backToTopBtn = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 400) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        });
-
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', async (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const submitBtn = document.getElementById('submitBtn');
-            const errorMsg = document.getElementById('errorMessage');
-            
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="loading-dots">Sending</span>';
-            errorMsg.classList.add('hidden');
+            // Set Loading State
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loader"></span> Sending...';
+            statusBox.className = "p-3 rounded text-sm mb-4 bg-blue-100 text-blue-700";
+            statusBox.textContent = "Processing request...";
+            statusBox.classList.remove('hidden');
 
-            const formData = new FormData(contactForm);
+            const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            // Real Google Apps Script Submission with Exponential Backoff Logic
-            const postWithRetry = async (url, options, retries = 5, backoff = 1000) => {
-                try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) throw new Error('Server Error');
-                    return await response.json();
-                } catch (err) {
-                    if (retries > 0) {
-                        await new Promise(r => setTimeout(r, backoff));
-                        return postWithRetry(url, options, retries - 1, backoff * 2);
-                    }
-                    throw err;
-                }
-            };
+            // Create a controller to handle timeouts
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
 
             try {
-                // Using URLSearchParams for compatibility with simple Apps Scripts
-                const params = new URLSearchParams(data);
-                
-                // If SCRIPT_URL is still placeholder, we simulate success for demo
-                if (SCRIPT_URL.includes("YOUR_GOOGLE")) {
-                    console.warn("Script URL not configured. Simulating success.");
-                    await new Promise(r => setTimeout(r, 1500));
-                } else {
-                    await postWithRetry(SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors', // Common for Google Apps Script cross-domain
-                        body: params
-                    });
-                }
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors', // IMPORTANT: Apps Script often requires no-cors
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                    signal: controller.signal
+                });
 
-                document.getElementById('contact-form-container').classList.add('hidden');
-                document.getElementById('contact-success').classList.remove('hidden');
-            } catch (err) {
-                submitBtn.disabled = false;
-                submitBtn.innerText = 'Submit Inquiry';
-                errorMsg.innerText = 'Unable to send. Please check your connection or try again later.';
-                errorMsg.classList.remove('hidden');
+                // With 'no-cors', we can't read the response body, but if we get here, it sent!
+                statusBox.className = "p-3 rounded text-sm mb-4 bg-green-100 text-green-700";
+                statusBox.textContent = "Success! Message sent successfully.";
+                form.reset();
+
+            } catch (error) {
+                console.error('Error!', error.message);
+                statusBox.className = "p-3 rounded text-sm mb-4 bg-red-100 text-red-700";
+                
+                if (error.name === 'AbortError') {
+                    statusBox.textContent = "Error: Request timed out. Check your internet or Script URL.";
+                } else {
+                    statusBox.textContent = "Error: " + error.message;
+                }
+            } finally {
+                clearTimeout(timeoutId);
+                btn.disabled = false;
+                btn.textContent = 'Send Message';
             }
         });
     </script>
 </body>
 </html>
+
 
 
