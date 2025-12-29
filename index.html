@@ -281,10 +281,20 @@
             if (!modal) return;
 
             if (show) {
-                modal.classList.add('active'); // CSS fixed to show this
+                modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                
+                // RESET FORM UI STATE ON OPEN
                 document.getElementById('contact-form-container').classList.remove('hidden');
                 document.getElementById('contact-success').classList.add('hidden');
+                
+                // RESET BUTTON STATE
+                const submitBtn = document.getElementById('submitBtn');
+                const btnText = document.getElementById('btnText');
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = "1";
+                btnText.textContent = "Submit Inquiry";
+                
                 document.getElementById('contactForm').reset();
             } else {
                 modal.classList.remove('active');
@@ -333,3 +343,4 @@
     </script>
 </body>
 </html>
+
