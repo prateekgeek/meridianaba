@@ -261,117 +261,114 @@
     <!-- Contact Modal -->
     <div id="contactModal" class="modal overflow-y-auto">
         <div class="max-w-xl mx-auto my-10 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative">
-            <button onclick="toggleModal('contactModal', false)" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors text-2xl" aria-label="Close">&times;</button>
+            <button onclick="toggleModal('contactModal', false)" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors text-2xl">&times;</button>
+            
             <div id="contact-form-container">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">Request Consultation</h2>
+                <h2 class="text-2xl font-bold text-slate-900 mb-2">Request Consultation</h2>
+                <p class="text-sm text-slate-500 mb-8">Tell us about your child's needs. All information is confidential.</p>
+                
                 <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
-                    <div class="hp-field"><input type="text" name="b_website_url" tabindex="-1"></div>
+                    <input type="text" name="name" required placeholder="Parent/Guardian Name" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all">
                     
-                    <input type="text" name="name" required placeholder="Parent Name" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="tel" name="phone" required placeholder="Phone" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all">
+                        <input type="email" name="email" required placeholder="Email" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all">
+                    </div>
                     
-                    <input type="email" name="email" required placeholder="Email Address" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
+                    <select name="service" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all">
+                        <option>Direct Home-Based ABA</option>
+                        <option>Parent Training Only</option>
+                        <option>Insurance Verification</option>
+                    </select>
                     
-                    <input type="tel" name="phone" required placeholder="Phone Number" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
+                    <textarea name="notes" rows="3" placeholder="Tell us about your child's age and current needs..." class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-teal-500 transition-all"></textarea>
                     
-                    <textarea name="notes" placeholder="Tell us about your child's needs..." class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20 h-32"></textarea>
-                    
-                    <div id="form-error" class="hidden text-red-500 text-sm font-medium"></div>
-                    <button type="submit" id="submit-btn" class="w-full bg-teal-700 text-white py-4 rounded-xl font-bold hover:bg-teal-800 transition-all shadow-lg">
-                        Submit Inquiry
+                    <button id="submitBtn" type="submit" class="w-full bg-teal-700 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-teal-800 transition-all flex justify-center items-center">
+                        <span id="btnText">Submit Inquiry</span>
                     </button>
                 </form>
+            </div>
+
+            <div id="contact-success" class="hidden text-center py-10">
+                <div class="w-16 h-16 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">✓</div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">Request Received</h3>
+                <p class="text-slate-500 text-sm">A clinical director will reach out to you within 24 hours.</p>
+                <button onclick="toggleModal('contactModal', false)" class="mt-6 text-teal-700 font-bold underline">Close</button>
             </div>
         </div>
     </div>
 
-    <div id="toast" class="toast"></div>
-
     <script>
-        const apiKey = ""; // Runtime provided
+        // FIXED URL (Removed the trailing 'L')
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwj_zCOgjwFm8HjG88JD64-DzrpSRe3bmftOi4XL45rU2j-wO4yGyyMgfakTMAIQ2xXMQ/exec';
 
-        async function fetchWithRetry(url, options, maxRetries = 5) {
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-                    const data = await response.json();
-                    return data;
-                } catch (err) {
-                    const delay = Math.pow(2, i) * 1000;
-                    if (i === maxRetries - 1) throw err;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
-            }
-        }
-        let isSubmitting = false;
-        let lastSubmissionTime = 0;
+        function toggleModal(modalId, show) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
 
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('visible');
-            setTimeout(() => toast.classList.remove('visible'), 4000);
-        }
-
-        function toggleModal(id, show) {
-            const m = document.getElementById(id);
-            if (show) { 
-                m.classList.add('active'); 
+            if (show) {
+                modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-            }
-            else { 
-                m.classList.remove('active'); 
-                document.body.style.overflow = ''; 
+                
+                // RESET FORM UI STATE ON OPEN
+                document.getElementById('contact-form-container').classList.remove('hidden');
+                document.getElementById('contact-success').classList.add('hidden');
+                
+                // RESET BUTTON STATE
+                const submitBtn = document.getElementById('submitBtn');
+                const btnText = document.getElementById('btnText');
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = "1";
+                btnText.textContent = "Submit Inquiry";
+                
+                document.getElementById('contactForm').reset();
+            } else {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
             }
         }
 
-        async function handleFormSubmit(e) {
-            e.preventDefault();
-            if (isSubmitting) return;
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            
+            submitBtn.disabled = true;
+            btnText.textContent = "Sending...";
+            submitBtn.style.opacity = "0.7";
 
-            const form = e.target;
             const formData = new FormData(form);
-            const errorDiv = document.getElementById('form-error');
-            const submitBtn = document.getElementById('submit-btn');
-
-            // Honeypot check
-            if (formData.get('b_website_url')) {
-                toggleModal('contactModal', false);
-                return;
-            }
-
-            const now = Date.now();
-            if (now - lastSubmissionTime < 30000) {
-                errorDiv.textContent = "Please wait a moment before sending another inquiry.";
-                errorDiv.classList.remove('hidden');
-                return;
-            }
+            const data = Object.fromEntries(formData.entries());
 
             try {
-                isSubmitting = true;
-                submitBtn.disabled = true;
-                submitBtn.textContent = "Sending...";
-                
-                // Simulate processing
-                await new Promise(r => setTimeout(r, 800));
-                
-                lastSubmissionTime = Date.now();
-                showToast("Inquiry received! We'll reach out shortly.");
-                form.reset();
-                errorDiv.classList.add('hidden');
-                toggleModal('contactModal', false);
-            } catch (err) {
-                errorDiv.textContent = "Error sending message. Please try again.";
-                errorDiv.classList.remove('hidden');
-            } finally {
-                isSubmitting = false;
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                document.getElementById('contact-form-container').classList.add('hidden');
+                document.getElementById('contact-success').classList.remove('hidden');
+            } catch (error) {
+                console.error('Submission error:', error);
+                btnText.textContent = "Error - Try Again";
                 submitBtn.disabled = false;
-                submitBtn.textContent = "Submit Inquiry";
+                submitBtn.style.opacity = "1";
             }
         }
+        // Back to Top functionality
+        const btt = document.getElementById('backToTop');
+        window.onscroll = function() {
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                btt.classList.add('visible');
+            } else {
+                btt.classList.remove('visible');
+            }
+        };
 
-        // Close modal on outside click
         window.onclick = function(event) {
             const modal = document.getElementById('contactModal');
             if (event.target == modal) {
@@ -381,5 +378,6 @@
     </script>
 </body>
 </html>
+
 
 
