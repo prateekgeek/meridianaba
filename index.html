@@ -72,9 +72,18 @@
     <!-- Navigation -->
     <nav class="sticky top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#top" class="flex flex-col group cursor-pointer hover:opacity-80 transition-opacity">
-                <span class="font-extrabold text-xl tracking-tight text-teal-900 leading-none uppercase group-hover:text-teal-700 transition-colors">Meridian</span>
-                <span class="text-[10px] tracking-[0.2em] font-bold text-teal-600 uppercase">Behavioral Pathways</span>
+            <!-- Brand Logo with SVG -->
+            <a href="#top" class="flex items-center gap-3 group cursor-pointer transition-opacity">
+                <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="group-hover:scale-105 transition-transform">
+                    <rect width="100" height="100" rx="22" fill="#0f766e"/>
+                    <path d="M25 70L42 35L59 70" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M42 70L59 35L76 70" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+                    <circle cx="59" cy="28" r="6" fill="#f59e0b" />
+                </svg>
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-xl tracking-tight text-teal-900 leading-none uppercase">Meridian</span>
+                    <span class="text-[9px] tracking-[0.25em] font-bold text-teal-600 uppercase">Behavioral Pathways</span>
+                </div>
             </a>
             
             <div class="hidden md:flex items-center space-x-8">
@@ -248,8 +257,14 @@
     <footer class="py-12 bg-slate-900 text-white">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <div class="flex flex-col items-center mb-8">
-                <span class="font-extrabold text-xl tracking-tight text-white leading-none uppercase">Meridian</span>
-                <span class="text-[10px] tracking-[0.2em] font-bold text-teal-400 uppercase">Behavioral Pathways</span>
+                <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-4">
+                    <rect width="100" height="100" rx="22" fill="#0f766e"/>
+                    <path d="M25 70L42 35L59 70" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M42 70L59 35L76 70" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+                    <circle cx="59" cy="28" r="6" fill="#f59e0b" />
+                </svg>
+                <span class="font-extrabold text-2xl tracking-tight text-white leading-none uppercase">Meridian</span>
+                <span class="text-[10px] tracking-[0.3em] font-bold text-teal-400 uppercase mt-2">Behavioral Pathways</span>
             </div>
             <p class="text-slate-400 text-sm mb-6 max-w-md mx-auto">Dedicated to raising the standard of home-based ABA therapy through play and connection.</p>
             <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
@@ -378,6 +393,7 @@
     </script>
 </body>
 </html>
+
 
 
 
