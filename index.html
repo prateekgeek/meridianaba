@@ -287,6 +287,23 @@
     <div id="toast" class="toast"></div>
 
     <script>
+        const apiKey = ""; // Runtime provided
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwj_zCOgjwFm8HjG88JD64-DzrpSRe3bmftOi4XL45rU2j-wO4yGyyMgfakTMAIQ2xXMQ/exec';
+
+        async function fetchWithRetry(url, options, maxRetries = 5) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+                    const data = await response.json();
+                    return data;
+                } catch (err) {
+                    const delay = Math.pow(2, i) * 1000;
+                    if (i === maxRetries - 1) throw err;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
         let isSubmitting = false;
         let lastSubmissionTime = 0;
 
@@ -364,4 +381,5 @@
     </script>
 </body>
 </html>
+
 
