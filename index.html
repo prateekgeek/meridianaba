@@ -24,13 +24,15 @@
             backdrop-filter: blur(8px); 
         }
         .modal.active { 
-            display: block !important; 
+            display: flex !important; 
+            align-items: center;
+            justify-content: center;
         }
 
         .nav-link { font-size: 0.875rem; font-weight: 600; color: #475569; transition: color 0.2s; }
         .nav-link:hover { color: #0f766e; }
         
-        .img-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .img-card { transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 1rem; overflow: hidden; }
         .img-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
         
         @keyframes pulse-soft {
@@ -39,24 +41,7 @@
         }
         .pulse-dot { animation: pulse-soft 2s infinite; }
 
-        /* Security: Honeypot field must be completely hidden */
         .hp-field { display: none !important; visibility: hidden !important; pointer-events: none; }
-
-        .image-loading {
-            background: #f1f5f9;
-            position: relative;
-            overflow: hidden;
-            min-height: 200px;
-        }
-        .image-loading::after {
-            content: "";
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            transform: translateX(-100%);
-            background: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
-            animation: shimmer 2s infinite;
-        }
-        @keyframes shimmer { 100% { transform: translateX(100%); } }
 
         .toast {
             position: fixed;
@@ -67,7 +52,7 @@
             background: #1e293b;
             color: white;
             font-weight: 600;
-            transform: translateY(100px);
+            transform: translateY(150%);
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 200;
         }
@@ -75,9 +60,10 @@
     </style>
 </head>
 <body class="antialiased text-slate-900" id="top">
+
     <!-- Announcement Banner -->
     <div class="bg-teal-900 text-teal-50 py-2.5 px-6 text-center relative z-[60] border-b border-teal-800">
-        <p class="text-[11px] md:text-xs font-bold tracking-widest uppercase flex items-center justify-center gap-2">
+        <p class="text-[10px] md:text-xs font-bold tracking-widest uppercase flex items-center justify-center gap-2">
             <span class="w-2 h-2 bg-teal-400 rounded-full pulse-dot"></span>
             Currently Accepting New Clients: No-Waitlist for In-Home ABA Therapy
         </p>
@@ -115,7 +101,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-40 pb-24 hero-gradient overflow-hidden">
+    <section class="pt-32 pb-24 hero-gradient overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
             <div>
                 <div class="inline-flex items-center px-3 py-1 bg-teal-50 text-teal-800 rounded-full text-[10px] font-bold mb-6 tracking-widest uppercase border border-teal-100">
@@ -129,13 +115,14 @@
                 </p>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <button onclick="toggleModal('contactModal', true)" class="bg-teal-700 text-white px-8 py-4 rounded-xl font-bold shadow-xl hover:bg-teal-800 transition-all text-center">Schedule Consultation</button>
-                    <a href="#services" class="border border-slate-200 text-slate-700 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition-all text-center">Our Programs</a>
+                    <a href="#services" class="border border-slate-200 text-slate-700 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition-all text-center flex items-center justify-center">Our Programs</a>
                 </div>
             </div>
             <div class="relative">
                 <div class="absolute -top-10 -right-10 w-64 h-64 bg-teal-100/50 rounded-full blur-3xl"></div>
-                <div class="image-loading rounded-[3rem] shadow-2xl aspect-[4/5]">
-                    <img id="hero-img" src="assets/1.png" class="hidden w-full h-full object-cover rounded-[3rem] relative z-10" alt="BCBA ABA for kids">
+                <div class="rounded-[3rem] shadow-2xl aspect-[4/5] overflow-hidden bg-slate-100">
+                    <!-- Image 1.png for Hero -->
+                    <img src="assets/1.png" class="w-full h-full object-cover relative z-10" alt="Therapist and child playing">
                 </div>
             </div>
         </div>
@@ -146,11 +133,13 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid lg:grid-cols-2 gap-20 items-center">
                 <div class="order-2 lg:order-1 grid grid-cols-2 gap-4">
-                    <div class="image-loading rounded-2xl shadow-lg mt-12 h-64 w-full img-card">
-                        <img id="img-puzzle" class="hidden h-full w-full object-cover rounded-2xl" alt="Puzzle work">
+                    <div class="shadow-lg mt-12 h-64 w-full img-card bg-slate-100">
+                        <!-- Image 2.png for Puzzle -->
+                        <img src="assets/2.png" class="h-full w-full object-cover" alt="Puzzle activities">
                     </div>
-                    <div class="image-loading rounded-2xl shadow-lg h-64 w-full img-card">
-                        <img id="img-toys" class="hidden h-full w-full object-cover rounded-2xl" alt="Learning toys">
+                    <div class="shadow-lg h-64 w-full img-card bg-slate-100">
+                        <!-- Image 3.png for Toys -->
+                        <img src="assets/3.png" class="h-full w-full object-cover" alt="Learning materials">
                     </div>
                 </div>
                 <div class="order-1 lg:order-2">
@@ -187,17 +176,17 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 group">
                     <div class="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">🏠</div>
-                    <h4 class="text-xl font-bold mb-4">Home-Based ABA</h4>
+                    <h4 class="text-xl font-bold mb-4 text-teal-900">Home-Based ABA</h4>
                     <p class="text-slate-500 text-sm leading-relaxed">1:1 therapy sessions in your child's most comfortable environment to maximize skill acquisition.</p>
                 </div>
                 <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 group">
                     <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">👪</div>
-                    <h4 class="text-xl font-bold mb-4">Parent Training</h4>
+                    <h4 class="text-xl font-bold mb-4 text-blue-900">Parent Training</h4>
                     <p class="text-slate-500 text-sm leading-relaxed">Empowering caregivers with the behavioral strategies needed to support their child's growth.</p>
                 </div>
                 <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 group">
                     <div class="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">🗺️</div>
-                    <h4 class="text-xl font-bold mb-4">Community Support</h4>
+                    <h4 class="text-xl font-bold mb-4 text-indigo-900">Community Support</h4>
                     <p class="text-slate-500 text-sm leading-relaxed">Assistance during outings and social events to help your child navigate real-world environments.</p>
                 </div>
             </div>
@@ -214,7 +203,7 @@
                     <div class="space-y-8">
                         <div>
                             <h5 class="font-bold text-teal-300 text-lg mb-2">Precision Data Tracking</h5>
-                            <p class="text-teal-100/70 text-sm">We use HIPAA-compliant digital tools to track progress in real-time, adjusting clinical strategies to meet your child where they are.</p>
+                            <p class="text-teal-100/70 text-sm">We use digital tools to track progress in real-time, adjusting clinical strategies to meet your child where they are.</p>
                         </div>
                         <div>
                             <h5 class="font-bold text-teal-300 text-lg mb-2">NET (Natural Environment Teaching)</h5>
@@ -222,9 +211,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="lg:w-1/2 relative">
-                    <div class="image-loading rounded-[2.5rem] shadow-2xl h-96 w-full">
-                        <img id="img-blocks" class="hidden h-full w-full object-cover rounded-[2.5rem]" alt="Adult and child interacting with blocks">
+                <div class="lg:w-1/2 relative w-full">
+                    <div class="rounded-[2.5rem] shadow-2xl h-96 w-full overflow-hidden bg-teal-800">
+                        <!-- Image 4.png for Blocks/Clinical -->
+                        <img src="assets/4.png" class="h-full w-full object-cover" alt="Clinical environment teaching">
                     </div>
                 </div>
             </div>
@@ -269,36 +259,28 @@
     </footer>
 
     <!-- Contact Modal -->
-    <div id="contactModal" class="modal overflow-y-auto">
-        <div class="max-w-xl mx-auto my-10 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative">
+    <div id="contactModal" class="modal">
+        <div class="max-w-xl w-full mx-6 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative">
             <button onclick="toggleModal('contactModal', false)" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors text-2xl">&times;</button>
-            <div id="contact-form-container">
+            <div>
                 <h2 class="text-2xl font-bold text-slate-900 mb-6">Request Consultation</h2>
                 <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
-                    <!-- Security: Honeypot field -->
                     <div class="hp-field">
-                        <label for="b_website_url">Website URL (leave blank)</label>
-                        <input type="text" id="b_website_url" name="b_website_url" autocomplete="off" tabindex="-1">
-                    </div>
-                    
-                    <div>
-                        <input type="text" name="name" id="name_field" required placeholder="Parent Name" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
+                        <input type="text" name="b_website_url" tabindex="-1">
                     </div>
                     <div>
-                        <input type="email" name="email" id="email_field" required placeholder="Email" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
+                        <input type="text" name="name" required placeholder="Parent Name" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
                     </div>
                     <div>
-                        <textarea name="notes" id="notes_field" placeholder="Current needs..." class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20 h-32"></textarea>
+                        <input type="email" name="email" required placeholder="Email" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
                     </div>
-                    
+                    <div>
+                        <textarea name="notes" placeholder="Current needs..." class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20 h-32"></textarea>
+                    </div>
                     <div id="form-error" class="hidden text-red-500 text-sm font-medium"></div>
-                    
                     <button type="submit" id="submit-btn" class="w-full bg-teal-700 text-white py-4 rounded-xl font-bold hover:bg-teal-800 transition-all disabled:opacity-50">
                         Submit Inquiry
                     </button>
-                    <p class="text-[10px] text-slate-400 text-center leading-relaxed">
-                        By submitting, you agree to our privacy policy. Your information is secure and HIPAA protected.
-                    </p>
                 </form>
             </div>
         </div>
@@ -307,64 +289,9 @@
     <div id="toast" class="toast"></div>
 
     <script>
-        const apiKey = ""; // Runtime provided
-        
-        // Security state
         let formLoadTime = 0;
         let isSubmitting = false;
         let lastSubmissionTime = 0;
-
-        async function fetchWithRetry(url, options, maxRetries = 5) {
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-                    return await response.json();
-                } catch (err) {
-                    const delay = Math.pow(2, i) * 1000;
-                    if (i === maxRetries - 1) throw err;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
-            }
-        }
-
-        async function generateBusinessImages() {
-            const imageConfig = [
-                { id: 'img-hero', prompt: "A warm, high-quality photograph of a therapist smiling and playing with a happy child in a cozy living room setting. Soft natural lighting, professional cinematography style." },
-                { id: 'img-puzzle', prompt: "Extreme close up of a child's hands working on a colorful educational wooden puzzle. Bright, soft focus background, professional lighting." },
-                { id: 'img-toys', prompt: "An aesthetic arrangement of modern educational wooden learning toys on a white rug. Soft lighting, high-end catalog photography." },
-                { id: 'img-blocks', prompt: "A therapist and child sitting on the floor together playing with colorful building blocks. Cheerful and collaborative atmosphere." }
-            ];
-
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
-
-            for (const item of imageConfig) {
-                try {
-                    const result = await fetchWithRetry(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            instances: [{ prompt: item.prompt }],
-                            parameters: { sampleCount: 1 }
-                        })
-                    });
-
-                    if (result.predictions?.[0]) {
-                        const img = document.getElementById(item.id);
-                        img.src = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-                        img.onload = () => {
-                            img.classList.remove('hidden');
-                            img.parentElement.classList.remove('image-loading');
-                        };
-                    }
-                } catch (e) {
-                    console.error(`Failed ${item.id}:`, e);
-                    const parent = document.getElementById(item.id).parentElement;
-                    parent.style.background = '#e2e8f0';
-                    parent.classList.remove('image-loading');
-                }
-            }
-        }
 
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -378,7 +305,7 @@
             if (show) { 
                 m.classList.add('active'); 
                 document.body.style.overflow = 'hidden';
-                formLoadTime = Date.now(); // Reset form timer on open
+                formLoadTime = Date.now();
             }
             else { 
                 m.classList.remove('active'); 
@@ -395,31 +322,14 @@
             const errorDiv = document.getElementById('form-error');
             const submitBtn = document.getElementById('submit-btn');
 
-            // 1. Honeypot check
             if (formData.get('b_website_url')) {
-                console.warn('Honeypot triggered');
                 toggleModal('contactModal', false);
-                return; // Silently discard
-            }
-
-            // 2. Submission throttling (30s between submissions)
-            const now = Date.now();
-            if (now - lastSubmissionTime < 30000) {
-                errorDiv.textContent = "Please wait a moment before sending another inquiry.";
-                errorDiv.classList.remove('hidden');
                 return;
             }
 
-            // 3. Human-like speed check (minimum 3 seconds to fill)
-            if (now - formLoadTime < 3000) {
-                console.warn('Form submitted too fast');
-                return; 
-            }
-
-            // 4. Basic validation
-            const name = formData.get('name');
-            if (name.length < 2 || name.length > 50) {
-                errorDiv.textContent = "Please enter a valid name.";
+            const now = Date.now();
+            if (now - lastSubmissionTime < 30000) {
+                errorDiv.textContent = "Please wait a moment before sending another inquiry.";
                 errorDiv.classList.remove('hidden');
                 return;
             }
@@ -428,17 +338,16 @@
                 isSubmitting = true;
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Sending...";
-                errorDiv.classList.add('hidden');
-
-                // Simulate processing/network delay
-                await new Promise(r => setTimeout(r, 1000));
+                
+                // Simulate success
+                await new Promise(r => setTimeout(r, 800));
                 
                 lastSubmissionTime = Date.now();
                 showToast("Inquiry received! We'll reach out shortly.");
                 form.reset();
                 toggleModal('contactModal', false);
             } catch (err) {
-                errorDiv.textContent = "Something went wrong. Please try again.";
+                errorDiv.textContent = "Error sending message.";
                 errorDiv.classList.remove('hidden');
             } finally {
                 isSubmitting = false;
@@ -447,13 +356,7 @@
             }
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            generateBusinessImages();
-            formLoadTime = Date.now();
-        });
+        window.onload = () => { formLoadTime = Date.now(); };
     </script>
 </body>
 </html>
-
-
-
