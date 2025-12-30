@@ -259,26 +259,24 @@
     </footer>
 
     <!-- Contact Modal -->
-    <div id="contactModal" class="modal">
-        <div class="max-w-xl w-full mx-6 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative">
-            <button onclick="toggleModal('contactModal', false)" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors text-2xl">&times;</button>
-            <div>
+    <div id="contactModal" class="modal overflow-y-auto">
+        <div class="max-w-xl mx-auto my-10 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative">
+            <button onclick="toggleModal('contactModal', false)" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors text-2xl" aria-label="Close">&times;</button>
+            <div id="contact-form-container">
                 <h2 class="text-2xl font-bold text-slate-900 mb-6">Request Consultation</h2>
                 <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
-                    <div class="hp-field">
-                        <input type="text" name="b_website_url" tabindex="-1">
-                    </div>
-                    <div>
-                        <input type="text" name="name" required placeholder="Parent Name" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
-                    </div>
-                    <div>
-                        <input type="email" name="email" required placeholder="Email" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
-                    </div>
-                    <div>
-                        <textarea name="notes" placeholder="Current needs..." class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20 h-32"></textarea>
-                    </div>
+                    <div class="hp-field"><input type="text" name="b_website_url" tabindex="-1"></div>
+                    
+                    <input type="text" name="name" required placeholder="Parent Name" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
+                    
+                    <input type="email" name="email" required placeholder="Email Address" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
+                    
+                    <input type="tel" name="phone" required placeholder="Phone Number" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
+                    
+                    <textarea name="notes" placeholder="Tell us about your child's needs..." class="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20 h-32"></textarea>
+                    
                     <div id="form-error" class="hidden text-red-500 text-sm font-medium"></div>
-                    <button type="submit" id="submit-btn" class="w-full bg-teal-700 text-white py-4 rounded-xl font-bold hover:bg-teal-800 transition-all disabled:opacity-50">
+                    <button type="submit" id="submit-btn" class="w-full bg-teal-700 text-white py-4 rounded-xl font-bold hover:bg-teal-800 transition-all shadow-lg">
                         Submit Inquiry
                     </button>
                 </form>
@@ -289,7 +287,6 @@
     <div id="toast" class="toast"></div>
 
     <script>
-        let formLoadTime = 0;
         let isSubmitting = false;
         let lastSubmissionTime = 0;
 
@@ -305,7 +302,6 @@
             if (show) { 
                 m.classList.add('active'); 
                 document.body.style.overflow = 'hidden';
-                formLoadTime = Date.now();
             }
             else { 
                 m.classList.remove('active'); 
@@ -322,6 +318,7 @@
             const errorDiv = document.getElementById('form-error');
             const submitBtn = document.getElementById('submit-btn');
 
+            // Honeypot check
             if (formData.get('b_website_url')) {
                 toggleModal('contactModal', false);
                 return;
@@ -339,15 +336,16 @@
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Sending...";
                 
-                // Simulate success
+                // Simulate processing
                 await new Promise(r => setTimeout(r, 800));
                 
                 lastSubmissionTime = Date.now();
                 showToast("Inquiry received! We'll reach out shortly.");
                 form.reset();
+                errorDiv.classList.add('hidden');
                 toggleModal('contactModal', false);
             } catch (err) {
-                errorDiv.textContent = "Error sending message.";
+                errorDiv.textContent = "Error sending message. Please try again.";
                 errorDiv.classList.remove('hidden');
             } finally {
                 isSubmitting = false;
@@ -356,7 +354,14 @@
             }
         }
 
-        window.onload = () => { formLoadTime = Date.now(); };
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target == modal) {
+                toggleModal('contactModal', false);
+            }
+        }
     </script>
 </body>
 </html>
+
